@@ -6,10 +6,10 @@ CXXFLAGS = -Wall -Wextra -std=c++11
 TARGET = main
 
 # Source files
-SRCS = main.cpp vehicule.cpp
+SRCS = main.cpp vehicule.cpp Voiture.cpp Bateau.cpp voitureAmphibie.cpp
 
 # Header files
-HDRS = vehicule.hpp
+HDRS = vehicule.hpp Voiture.hpp Bateau.hpp voitureAmphibie.hpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)

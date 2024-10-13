@@ -40,7 +40,7 @@ public:
 
     virtual void mettreEnPanne(double random);
 
-    virtual string getEtat(string etat) const;
+    virtual string getEtat() const;
 
     virtual ~Vehicule();
     friend ostream &operator<<(ostream &s, Vehicule const &v);

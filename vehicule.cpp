@@ -8,20 +8,33 @@ Vehicule::Vehicule(int vitesseMax, int nbPlaces, int occupants) : vitesseMax_(vi
 
 void Vehicule::mettreEnPanne(double random)
 {
-    if (random < 0.5)
+    try
     {
-        etat_ = PANNE_LEGERE;
+        if (random < 0 || random > 1)
+        {
+            throw std::invalid_argument("Le nombre aléatoire doit être compris entre 0 et 1.");
+        }
+        else
+        {
+            if (random < 0.5)
+            {
+                etat_ = PANNE_LEGERE;
+            }
+            else
+            {
+                etat_ = PANNE_SEVERE;
+            }
+        }
     }
-    else
+    catch (const std::invalid_argument &e)
     {
-        etat_ = PANNE_SEVERE;
+        cout << "Erreur :" << e.what() << endl;
     }
 }
 
-string Vehicule::getEtat(string etat) const
+string Vehicule::getEtat() const
 {
-    cout<< _etat<< endl;
-    return etat;
+    cout << etat_ << endl;
 }
 
 void Vehicule::accelerer(int increment)
@@ -52,7 +65,7 @@ void Vehicule::demarrer()
     {
         if (etat_ == MARCHE)
         {
-            throw std::invalid_argument("Le vehicule est en marche.");
+            throw std::invalid_argument("Le vehicule est déja en marche.");
         }
         else if (etat_ == PANNE_SEVERE)
         {
@@ -64,9 +77,9 @@ void Vehicule::demarrer()
             etat_ = MARCHE;
         }
     }
-    catch (std::string const *e)
+    catch (const std::invalid_argument &err_msg)
     {
-        cout << "Erreur :" << e << endl;
+        cout << "Erreur :" << err_msg.what() << endl;
     }
 }
 
@@ -92,9 +105,9 @@ void Vehicule::descendre(int nbOcc)
     try
     {
         occupants_ -= nbOcc;
-        if (occupants_ < 0)
+        if (occupants_ < 1)
         {
-            throw string("Nombre d'occupants négatif ! Nombre d'occupants minimum = 0");
+            throw string("Nombre d'occupants inferieur à 1 ! Nombre d'occupants minimum = 1, ce n'est pas encore le futur !");
             occupants_ = 0;
         }
     }
@@ -118,9 +131,9 @@ void Vehicule::arreter()
             vitesse_ = 0;
         }
     }
-    catch (std::string const *e)
+    catch (const std::invalid_argument &e)
     {
-        cout << "Erreur :" << e << endl;
+        cout << "Erreur :" << e.what() << endl;
     }
 }
 
